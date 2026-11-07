@@ -94,7 +94,9 @@ function resumo_() {
     if (!s) return;
     sessoes[s] = true;
     const d = v(l, "data_hora");
-    const dia = d instanceof Date ? Utilities.formatDate(d, "America/Sao_Paulo", "yyyy-MM-dd") : String(d).slice(0, 10);
+    // datas lidas da planilha nem sempre passam no "instanceof Date"; por isso testamos getTime
+    const ehData = d && typeof d.getTime === "function" && !isNaN(d.getTime());
+    const dia = ehData ? Utilities.formatDate(d, "America/Sao_Paulo", "yyyy-MM-dd") : String(d).slice(0, 10);
     if (ev === "recomendacao") {
       if (!comRec[s]) {
         comRec[s] = true;
